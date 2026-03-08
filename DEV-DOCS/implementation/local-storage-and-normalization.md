@@ -14,12 +14,15 @@ Describe how Lobsterhook turns raw `.eml` files into portable JSON payloads and 
 ## Invariants
 - Raw `.eml` exports are the canonical record of a message.
 - Normalized JSON is derived from the raw `.eml`, not from Himalaya's rendered message view.
+- Plain text wins for the preferred message field whenever it is present and non-empty.
+- HTML is cleaned with Beautiful Soup and converted to Markdown with `markdownify` only when plain text is missing.
 - Artifact paths are partitioned by account, folder, year, and month to keep the local state navigable.
 
 ## Failure Modes
 - Malformed MIME or charset issues should degrade to replacement decoding instead of crashing the parser outright.
+- HTML cleanup must strip hidden content, tracking pixels, and obvious quoted-reply containers so webhook consumers do not receive large noisy bodies by default.
 - Filesystem writes must stay atomic enough that partially written JSON files are not left in place.
 
 ## Validation
-- `tests/test_normalizer.py` covers plain-text, HTML, attachment, and thread-key extraction.
+- `tests/test_normalizer.py` covers plain-text preference, HTML cleanup, Markdown conversion, attachment extraction, and thread-key extraction.
 - Live mailbox testing still needs to validate a wider range of real-world MIME structures.
