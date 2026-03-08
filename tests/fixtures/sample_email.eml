@@ -1,0 +1,33 @@
+From: Example Sender <sender@example.com>
+To: Support Team <support@example.com>
+Cc: Audit <audit@example.com>
+Reply-To: Reply Desk <reply@example.com>
+Subject: Testing Lobsterhook
+Date: Sat, 08 Mar 2026 10:15:00 +0000
+Message-ID: <message-123@example.com>
+In-Reply-To: <parent@example.com>
+References: <root@example.com> <parent@example.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="mix-boundary"
+
+--mix-boundary
+Content-Type: multipart/alternative; boundary="alt-boundary"
+
+--alt-boundary
+Content-Type: text/plain; charset="utf-8"
+
+Hello from plain text.
+
+--alt-boundary
+Content-Type: text/html; charset="utf-8"
+
+<p>Hello from <strong>HTML</strong>.</p>
+
+--alt-boundary--
+--mix-boundary
+Content-Type: text/plain; name="note.txt"
+Content-Disposition: attachment; filename="note.txt"
+Content-Transfer-Encoding: base64
+
+QXR0YWNobWVudCBib2R5Cg==
+--mix-boundary--

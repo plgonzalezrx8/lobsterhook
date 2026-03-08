@@ -1,0 +1,26 @@
+[app]
+data_dir = "./data"
+himalaya_bin = "himalaya"
+himalaya_config = "~/.config/himalaya/config.toml"
+poll_interval_seconds = 60
+page_size = 50
+scan_page_cap = 10
+scan_lookback_seconds = 300
+dispatcher_batch_size = 10
+http_timeout_seconds = 30
+initial_backoff_seconds = 30
+max_backoff_seconds = 900
+max_attempts = 5
+user_agent = "lobsterhook/0.1.0"
+
+[[accounts]]
+name = "icloud"
+folders = ["INBOX"]
+webhook_url = "https://example.com/webhooks/icloud"
+bearer_token_env = "LOBSTERHOOK_ICLOUD_TOKEN"
+
+[[accounts]]
+name = "gmail"
+folders = ["INBOX", "[Gmail]/Spam"]
+webhook_url = "https://example.com/webhooks/gmail"
+bearer_token_file = "~/.config/lobsterhook/gmail.token"

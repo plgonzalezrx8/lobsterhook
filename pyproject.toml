@@ -1,0 +1,17 @@
+[project]
+name = "lobsterhook"
+version = "0.1.0"
+description = "Local-first Himalaya poller that dispatches new email events to outbound webhooks."
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.4.1"]
+
+[project.scripts]
+lobsterhook = "app.__main__:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
