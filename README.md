@@ -93,6 +93,14 @@ Lobsterhook keeps raw `.eml` files and rich normalized JSON locally, but the web
   - `message_format`
   - `message_source`
 
+### Minimal Contract Stability Policy
+
+- Minimal payload is treated as a versioned compatibility contract (`v1`).
+- The key set and key order are intentionally deterministic.
+- No wire-breaking key rename/removal is allowed without:
+  - updating the versioned fixture contract tests
+  - documenting the migration in the same change set
+
 Message selection rule:
 
 - prefer cleaned `text/plain` when it exists
@@ -164,12 +172,19 @@ uv run --with pytest pytest
 
 GitHub Actions runs the same test suite and CLI smoke checks on every push, pull request, and manual dispatch through [`.github/workflows/ci.yml`](./.github/workflows/ci.yml).
 
+Run normalization heuristic regression checks:
+
+```bash
+uv run python -m app evaluate-normalization --json-output ./.tmp/normalization-eval.json
+```
+
 Quick CLI smoke checks:
 
 ```bash
 uv run python -m app --help
 uv run python -m app poller --help
 uv run python -m app dispatcher --help
+uv run python -m app evaluate-normalization
 ```
 
 ## Documentation

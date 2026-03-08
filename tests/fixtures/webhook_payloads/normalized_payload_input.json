@@ -1,0 +1,32 @@
+{
+  "account": "support",
+  "folder": "INBOX",
+  "remote_id": "42",
+  "detected_at": "2026-03-08T12:00:00+00:00",
+  "return_path": "<sender@example.com>",
+  "date": "Sat, 08 Mar 2026 10:15:00 +0000",
+  "sender": {
+    "name": "Example Sender",
+    "address": "sender@example.com"
+  },
+  "to": [
+    {
+      "name": "Support Team",
+      "address": "support@example.com"
+    }
+  ],
+  "subject": "Testing Lobsterhook",
+  "preferred_message": "Hello from plain text.",
+  "preferred_message_format": "plain",
+  "preferred_message_source": "text/plain",
+  "headers": {
+    "X-Test": [
+      "1"
+    ]
+  },
+  "raw_path": "/tmp/raw.eml",
+  "normalized_path": "/tmp/normalized.json",
+  "html_body": "<p>Hello</p>",
+  "text_body": "Hello",
+  "attachments": []
+}

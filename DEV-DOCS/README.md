@@ -33,6 +33,7 @@ DEV-DOCS/
 └── implementation/
     ├── himalaya-adapter.md
     ├── local-storage-and-normalization.md
+    ├── normalization-fixture-playbook.md
     └── sqlite-queue-and-idempotency.md
 ```
 

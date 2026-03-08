@@ -22,6 +22,9 @@ Document the repository-specific coding rules for Lobsterhook contributors.
 
 ## Comments and Documentation
 - Comment non-obvious invariants only: scan cutoff logic, idempotency rules, retry backoff, and MIME parsing tradeoffs.
+- For heuristic branches, use this structure in comments:
+  - why the heuristic exists
+  - failure mode if removed
 - Keep `DEV-DOCS/` aligned with changes to architecture, config, runtime behavior, or testing workflow.
 
 ## Imports and Dependencies

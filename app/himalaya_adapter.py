@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import os
-import subprocess
+import subprocess  # nosec B404
 from pathlib import Path
 
 from app.models import Envelope
@@ -104,7 +104,8 @@ class HimalayaAdapter:
     def _run(self, command: list[str]) -> subprocess.CompletedProcess[str]:
         env = os.environ.copy()
         env["RUST_LOG"] = "off"
-        result = subprocess.run(
+        # Command is built from explicit flags and trusted config paths.
+        result = subprocess.run(  # nosec B603
             command,
             check=False,
             capture_output=True,

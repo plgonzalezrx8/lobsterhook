@@ -1,0 +1,33 @@
+{
+  "fixture": "noisy_html_email.eml",
+  "account": "support",
+  "folder": "INBOX",
+  "remote_id": "fixture-noisy-html",
+  "checks": {
+    "preferred_message_source": "text/html",
+    "preferred_message_format": "markdown",
+    "preferred_message_contains": [
+      "Hello **team**,",
+      "[your account link](https://example.com/account)"
+    ],
+    "preferred_message_not_contains": [
+      "Old quoted reply"
+    ],
+    "markdown_contains": [
+      "Hello **team**,",
+      "[your account link](https://example.com/account)"
+    ],
+    "markdown_not_contains": [
+      "Old quoted reply"
+    ],
+    "cleaned_html_not_contains": [
+      "console.log",
+      "gmail_quote",
+      "Old quoted reply",
+      "display:none",
+      "example.com/pixel"
+    ],
+    "quoted_reply_removed": true,
+    "tracking_pixel_removed": true
+  }
+}

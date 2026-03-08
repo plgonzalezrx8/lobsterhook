@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import sqlite3
 import time
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -14,6 +15,41 @@ from app.db import Database
 from app.models import DeliveryResult
 
 LOGGER = logging.getLogger(__name__)
+
+# Version marker for minimal webhook payload consumers and compatibility tests.
+MINIMAL_WEBHOOK_CONTRACT_VERSION = "v1"
+
+# Ordered field list for the minimal webhook payload contract.
+MINIMAL_WEBHOOK_FIELD_ORDER = (
+    "account",
+    "folder",
+    "remote_id",
+    "detected_at",
+    "return_path",
+    "date",
+    "from",
+    "to",
+    "subject",
+    "message",
+    "message_format",
+    "message_source",
+)
+
+# Source-field mapping for deterministic contract shaping.
+MINIMAL_WEBHOOK_FIELD_SOURCE = {
+    "account": "account",
+    "folder": "folder",
+    "remote_id": "remote_id",
+    "detected_at": "detected_at",
+    "return_path": "return_path",
+    "date": "date",
+    "from": "sender",
+    "to": "to",
+    "subject": "subject",
+    "message": "preferred_message",
+    "message_format": "preferred_message_format",
+    "message_source": "preferred_message_source",
+}
 
 
 class WebhookDispatcher:
@@ -52,7 +88,7 @@ class WebhookDispatcher:
 
         return processed
 
-    def _deliver_job(self, job: object) -> None:
+    def _deliver_job(self, job: sqlite3.Row) -> None:
         payload = json.loads(job["payload_json"])
         account = self.config.accounts[payload["account"]]
         token = resolve_bearer_token(account)
@@ -105,7 +141,7 @@ class WebhookDispatcher:
             remote_id=payload["remote_id"],
         )
 
-    def _handle_internal_failure(self, job: object, error_message: str) -> None:
+    def _handle_internal_failure(self, job: sqlite3.Row, error_message: str) -> None:
         payload = json.loads(job["payload_json"])
         attempts = int(job["attempts"])
         dead_letter = attempts >= self.config.app.max_attempts
@@ -143,7 +179,8 @@ class WebhookDispatcher:
         }
         req = request.Request(url=url, data=body, headers=headers, method="POST")
         try:
-            with request.urlopen(req, timeout=self.config.app.http_timeout_seconds) as response:
+            # Target URL comes from explicit account configuration.
+            with request.urlopen(req, timeout=self.config.app.http_timeout_seconds) as response:  # nosec B310
                 return DeliveryResult(
                     status_code=response.status,
                     response_body=response.read().decode("utf-8", errors="replace"),
@@ -163,21 +200,16 @@ class WebhookDispatcher:
 
         # Minimal mode keeps the downstream contract stable and small while the
         # richer normalized artifact remains available on disk for replay/debug.
-        sender = normalized_payload.get("sender") or {"name": None, "address": None}
-        return {
-            "account": normalized_payload.get("account"),
-            "folder": normalized_payload.get("folder"),
-            "remote_id": normalized_payload.get("remote_id"),
-            "detected_at": normalized_payload.get("detected_at"),
-            "return_path": normalized_payload.get("return_path"),
-            "date": normalized_payload.get("date"),
-            "from": sender,
-            "to": normalized_payload.get("to"),
-            "subject": normalized_payload.get("subject"),
-            "message": normalized_payload.get("preferred_message"),
-            "message_format": normalized_payload.get("preferred_message_format"),
-            "message_source": normalized_payload.get("preferred_message_source"),
-        }
+        webhook_payload: dict[str, object] = {}
+        for field_name in MINIMAL_WEBHOOK_FIELD_ORDER:
+            source_field = MINIMAL_WEBHOOK_FIELD_SOURCE[field_name]
+            value = normalized_payload.get(source_field)
+            if field_name == "from":
+                # Keep sender structure stable even when upstream sender parsing
+                # cannot resolve name/address details.
+                value = value or {"name": None, "address": None}
+            webhook_payload[field_name] = value
+        return webhook_payload
 
     def _should_retry(self, status_code: int | None, error_message: str | None) -> bool:
         if status_code is None:

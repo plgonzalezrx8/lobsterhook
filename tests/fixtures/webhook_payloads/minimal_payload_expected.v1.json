@@ -1,0 +1,22 @@
+{
+  "account": "support",
+  "folder": "INBOX",
+  "remote_id": "42",
+  "detected_at": "2026-03-08T12:00:00+00:00",
+  "return_path": "<sender@example.com>",
+  "date": "Sat, 08 Mar 2026 10:15:00 +0000",
+  "from": {
+    "name": "Example Sender",
+    "address": "sender@example.com"
+  },
+  "to": [
+    {
+      "name": "Support Team",
+      "address": "support@example.com"
+    }
+  ],
+  "subject": "Testing Lobsterhook",
+  "message": "Hello from plain text.",
+  "message_format": "plain",
+  "message_source": "text/plain"
+}
