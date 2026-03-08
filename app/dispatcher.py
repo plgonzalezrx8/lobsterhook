@@ -58,8 +58,9 @@ class WebhookDispatcher:
         token = resolve_bearer_token(account)
         normalized_path = Path(payload["normalized_path"])
         normalized_payload = json.loads(normalized_path.read_text(encoding="utf-8"))
+        webhook_payload = self._build_webhook_payload(account.payload_mode, normalized_payload)
 
-        result = self._post_payload(account.webhook_url, token, normalized_payload)
+        result = self._post_payload(account.webhook_url, token, webhook_payload)
         attempt_number = int(job["attempts"])
         requested_at = _utcnow().isoformat()
         self.database.record_delivery_attempt(
@@ -155,6 +156,26 @@ class WebhookDispatcher:
             )
         except error.URLError as exc:
             return DeliveryResult(status_code=None, response_body=None, error=str(exc.reason))
+
+    def _build_webhook_payload(self, payload_mode: str, normalized_payload: dict[str, object]) -> dict[str, object]:
+        if payload_mode == "full":
+            return normalized_payload
+
+        sender = normalized_payload.get("sender") or {"name": None, "address": None}
+        return {
+            "account": normalized_payload.get("account"),
+            "folder": normalized_payload.get("folder"),
+            "remote_id": normalized_payload.get("remote_id"),
+            "detected_at": normalized_payload.get("detected_at"),
+            "return_path": normalized_payload.get("return_path"),
+            "date": normalized_payload.get("date"),
+            "from": sender,
+            "to": normalized_payload.get("to"),
+            "subject": normalized_payload.get("subject"),
+            "message": normalized_payload.get("preferred_message"),
+            "message_format": normalized_payload.get("preferred_message_format"),
+            "message_source": normalized_payload.get("preferred_message_source"),
+        }
 
     def _should_retry(self, status_code: int | None, error_message: str | None) -> bool:
         if status_code is None:

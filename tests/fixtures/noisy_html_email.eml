@@ -1,0 +1,28 @@
+From: Newsletter Sender <newsletter@example.com>
+To: Support Team <support@example.com>
+Subject: Packed HTML Email
+Date: Sat, 08 Mar 2026 11:15:00 +0000
+Message-ID: <message-456@example.com>
+MIME-Version: 1.0
+Content-Type: text/html; charset="utf-8"
+
+<html>
+  <head>
+    <style>.hidden { display: none; }</style>
+    <script>console.log('tracking');</script>
+  </head>
+  <body>
+    <!-- hidden comment -->
+    <div>Hello <strong>team</strong>,</div>
+    <div>Here is <a href="https://example.com/account">your account link</a>.</div>
+    <img src="https://example.com/pixel" width="1" height="1" alt="" />
+    <div class="hidden">This should not survive.</div>
+    <div style="display:none">Neither should this.</div>
+    <div class="gmail_quote">
+      On Fri, Mar 7, 2026 at 10:00 AM Old Sender &lt;old@example.com&gt; wrote:
+      <blockquote>
+        <div>Old quoted reply.</div>
+      </blockquote>
+    </div>
+  </body>
+</html>

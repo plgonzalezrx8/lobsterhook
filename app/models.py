@@ -39,6 +39,7 @@ class AccountRoute:
     name: str
     folders: tuple[str, ...]
     webhook_url: str
+    payload_mode: str = "full"
     bearer_token: str | None = None
     bearer_token_env: str | None = None
     bearer_token_file: Path | None = None
@@ -91,6 +92,8 @@ class NormalizedMessage:
     remote_id: str
     remote_id_kind: str
     detected_at: str
+    return_path: str | None
+    date: str | None
     message_id: str | None
     in_reply_to: list[str]
     references: list[str]
@@ -104,6 +107,12 @@ class NormalizedMessage:
     reply_to: list[dict[str, str | None]]
     text_body: str | None
     html_body: str | None
+    cleaned_text_body: str | None
+    cleaned_html_body: str | None
+    markdown_body: str | None
+    preferred_message: str | None
+    preferred_message_format: str | None
+    preferred_message_source: str | None
     attachments: list[AttachmentMetadata]
     headers: dict[str, list[str]]
     body_hash: str
