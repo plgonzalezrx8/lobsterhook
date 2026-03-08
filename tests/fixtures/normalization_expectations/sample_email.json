@@ -1,0 +1,24 @@
+{
+  "fixture": "sample_email.eml",
+  "account": "support",
+  "folder": "INBOX",
+  "remote_id": "fixture-sample",
+  "checks": {
+    "preferred_message_source": "text/plain",
+    "preferred_message_format": "plain",
+    "preferred_message_contains": [
+      "Hello from plain text."
+    ],
+    "preferred_message_not_contains": [
+      "Old quoted reply"
+    ],
+    "markdown_contains": [
+      "Hello from **HTML**."
+    ],
+    "cleaned_html_contains": [
+      "<strong>HTML</strong>"
+    ],
+    "quoted_reply_removed": true,
+    "tracking_pixel_removed": true
+  }
+}

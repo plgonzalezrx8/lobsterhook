@@ -12,6 +12,7 @@ Deliver normalized email payloads to downstream systems without coupling Lobster
 - Each claimed job loads the normalized JSON payload from disk, resolves the per-account Bearer token, and builds the outbound payload according to the account `payload_mode`.
 - `payload_mode = "full"` preserves the current behavior and POSTs the whole normalized JSON document.
 - `payload_mode = "minimal"` POSTs only the key headers, debug metadata, and the preferred message field selected by the normalizer.
+- Minimal payload mode is treated as a versioned compatibility contract (`v1`) with deterministic field order.
 - HTTP `2xx` responses mark the job done and the message delivered.
 - Network failures, `408`, `429`, and `5xx` responses retry with exponential backoff up to the configured attempt limit.
 - Other non-success responses move the job to `dead_letter`.
@@ -28,8 +29,16 @@ Deliver normalized email payloads to downstream systems without coupling Lobster
 
 ## Validation and Testing
 - `tests/test_dispatcher.py` covers the permanent-failure dead-letter path.
-- `tests/test_dispatcher_payloads.py` covers both `full` and `minimal` payload shaping.
+- `tests/test_dispatcher_payloads.py` covers both `full` and `minimal` payload shaping, key order, and optional-field fallback behavior.
+- Versioned golden fixtures under `tests/fixtures/webhook_payloads/` lock the wire contract for `full` and `minimal` payload modes.
 - Additional live tests are still needed for successful delivery and retry timing against a disposable receiver.
+
+## Contract Compatibility Policy
+- Treat `minimal` payload mode as a versioned external contract.
+- Do not rename or remove minimal payload keys without:
+  - bumping the contract version marker
+  - updating golden fixtures and compatibility tests
+  - documenting migration notes in README and DEV-DOCS
 
 ## Open Follow-Ups
 - Add operator tooling to inspect or replay dead-letter jobs if real integrations need it.

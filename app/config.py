@@ -8,7 +8,6 @@ from pathlib import Path
 
 from app.models import AccountRoute, AppSettings, RuntimeConfig
 
-
 DEFAULT_CONFIG_PATHS = (
     Path("lobsterhook.toml"),
     Path.home() / ".config" / "lobsterhook" / "config.toml",
@@ -159,12 +158,19 @@ def _resolve_path(raw_value: str | Path, base_dir: Path) -> Path:
 
 
 def _optional_path(raw_value: str | Path | None, base_dir: Path) -> Path | None:
-    if raw_value in (None, ""):
+    if raw_value is None:
+        return None
+    if raw_value == "":
         return None
     return _resolve_path(raw_value, base_dir)
 
 
 def _positive_int(value: object, field_name: str) -> int:
+    if isinstance(value, bool):
+        raise ConfigError(f"{field_name} must be an integer.")
+    if not isinstance(value, (int, str)):
+        raise ConfigError(f"{field_name} must be an integer.")
+
     try:
         number = int(value)
     except (TypeError, ValueError) as exc:

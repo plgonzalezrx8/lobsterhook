@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+
 from app.config import load_config
 from app.db import Database
 from app.dispatcher import WebhookDispatcher

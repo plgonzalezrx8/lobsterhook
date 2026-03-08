@@ -10,7 +10,12 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.4.1"]
+dev = [
+    "bandit>=1.8.6",
+    "mypy>=1.18.1",
+    "pytest>=8.4.1",
+    "ruff>=0.13.0",
+]
 
 [project.scripts]
 lobsterhook = "app.__main__:main"
@@ -18,3 +23,20 @@ lobsterhook = "app.__main__:main"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[tool.ruff]
+line-length = 110
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.14"
+pretty = true
+show_error_codes = true
+ignore_missing_imports = true
+
+[tool.bandit]
+exclude_dirs = ["tests"]

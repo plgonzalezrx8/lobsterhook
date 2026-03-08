@@ -7,10 +7,12 @@ import sqlite3
 import time
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
+from typing import Protocol
 
 from app.config import RuntimeConfig
 from app.db import Database
-from app.himalaya_adapter import HimalayaAdapter, HimalayaAdapterError
+from app.himalaya_adapter import HimalayaAdapterError
 from app.models import Envelope, JobPayload
 from app.normalizer import normalize_email
 from app.storage import StorageManager
@@ -28,6 +30,16 @@ class PollerSummary:
     failed_mailboxes: int = 0
 
 
+class MailboxAdapter(Protocol):
+    """Minimal Himalaya adapter surface required by the poller."""
+
+    def list_envelopes(self, *, account: str, folder: str, page: int, page_size: int) -> list[Envelope]:
+        """List mailbox envelope metadata for one page."""
+
+    def export_message(self, *, account: str, folder: str, remote_id: str, destination: Path) -> Path:
+        """Export one raw email to a destination path."""
+
+
 class MailPoller:
     """Walk configured mailboxes, capture unseen mail, and queue webhook jobs."""
 
@@ -37,7 +49,7 @@ class MailPoller:
         config: RuntimeConfig,
         database: Database,
         storage: StorageManager,
-        adapter: HimalayaAdapter,
+        adapter: MailboxAdapter,
     ) -> None:
         self.config = config
         self.database = database
