@@ -1,0 +1,30 @@
+# 01 - Task List
+
+## Last Updated
+2026-03-08
+
+## Purpose
+Track the active execution backlog for Lobsterhook.
+
+## Blockers
+- None inside the repository. Live validation depends on local Himalaya account access and a reachable webhook endpoint.
+
+## In Progress
+- [ ] Validate the current implementation against a real Himalaya account and a disposable webhook receiver.
+
+## Up Next
+- [ ] Add GitHub Actions for the existing test suite and a basic CLI smoke check.
+- [ ] Add a small replay or inspect command for dead-letter jobs and delivery attempts.
+- [ ] Add more integration coverage around malformed Himalaya JSON and missing normalized payload files.
+
+## Backlog
+- [ ] Add Linux `systemd` unit templates after the macOS `launchd` flow is validated.
+- [ ] Add richer outbound webhook metadata or custom headers if real consumers need them.
+
+## Completed Recently
+- [x] Implemented the Lobsterhook v1 scaffold with poller, dispatcher, SQLite state, and local artifact storage.
+- [x] Bootstrapped `DEV-DOCS/` and expanded the root `README.md`.
+
+## Notes
+- See [features/mailbox-polling.md](./features/mailbox-polling.md) for poller behavior details.
+- See [implementation/himalaya-adapter.md](./implementation/himalaya-adapter.md) for the CLI assumptions that shape the current design.

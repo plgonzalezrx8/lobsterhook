@@ -1,2 +1,144 @@
-# lobsterhook
-A way to send web hooks from received emails. Perfect to use with Openclaw or others in the ecosystem to trigger events.
+# Lobsterhook
+
+Lobsterhook is a local-first email-to-webhook bridge built around [Himalaya](https://github.com/pimalaya/himalaya). It polls configured mailboxes, exports each unseen message as a raw `.eml`, normalizes it into JSON with Python's standard library, stores the artifacts locally, and dispatches the normalized payload to a configured outbound webhook.
+
+## Why Himalaya
+
+Himalaya already solves mailbox access and account configuration. Lobsterhook keeps the sync logic outside Himalaya's scope:
+
+- `himalaya envelope list --output json` provides compact detection metadata.
+- `himalaya message export --full` provides the canonical raw `.eml` used for normalization.
+- Himalaya envelope ids are treated as opaque backend ids, not assumed to be raw IMAP UIDs.
+
+That separation keeps Lobsterhook focused on persistence, idempotency, retries, and outbound delivery.
+
+## Current v1 Scope
+
+- Poll multiple Himalaya accounts and multiple folders.
+- Detect unseen mail using local SQLite state.
+- Store raw `.eml` and normalized `.json` artifacts under `data/`.
+- Queue outbound webhook deliveries with retry and dead-letter behavior.
+- Run as a poller process and a dispatcher process.
+
+Out of scope in the current implementation:
+
+- mailbox write-back or draft creation
+- inbound webhook ingestion
+- OpenClaw-specific prompting or agent orchestration
+- Linux-first service packaging
+
+## Repository Layout
+
+```text
+.
+├── app/                     # Python package for config, polling, normalization, and dispatch
+├── launchd/                 # macOS launchd plist templates
+├── scripts/                 # Thin uv-backed runner scripts
+├── tests/                   # Unit and integration-style tests
+├── DEV-DOCS/                # Repository operating docs
+├── lobsterhook.example.toml # Example configuration
+└── pyproject.toml           # Python project metadata
+```
+
+## Prerequisites
+
+- Python 3.14+
+- `uv`
+- Himalaya 1.2.x available on `PATH`
+- A working Himalaya account configuration, usually at `~/.config/himalaya/config.toml`
+
+Optional:
+
+- macOS `launchd` if you want Lobsterhook to run continuously as background services
+
+## Configuration
+
+Lobsterhook uses a TOML config file. The CLI searches for:
+
+1. `./lobsterhook.toml`
+2. `~/.config/lobsterhook/config.toml`
+
+An example file lives at [`lobsterhook.example.toml`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/lobsterhook.example.toml).
+
+Each `[[accounts]]` entry defines:
+
+- the Himalaya account name
+- the folders to monitor
+- the outbound webhook URL
+- exactly one bearer-token source:
+  - inline `bearer_token`
+  - `bearer_token_env`
+  - `bearer_token_file`
+
+## Runtime Modes
+
+Initialize the database:
+
+```bash
+uv run python -m app --config ./lobsterhook.toml init-db
+```
+
+Run one poll cycle:
+
+```bash
+uv run python -m app --config ./lobsterhook.toml poller --once
+```
+
+Run the long-lived poller:
+
+```bash
+uv run python -m app --config ./lobsterhook.toml poller
+```
+
+Run one dispatcher batch:
+
+```bash
+uv run python -m app --config ./lobsterhook.toml dispatcher --once
+```
+
+Run the long-lived dispatcher:
+
+```bash
+uv run python -m app --config ./lobsterhook.toml dispatcher
+```
+
+Shell wrappers are available in [`scripts/`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/scripts).
+
+## Local Artifact Layout
+
+By default, Lobsterhook stores runtime state under `./data`:
+
+```text
+data/
+├── lobsterhook.db
+├── raw/
+├── normalized/
+├── events/
+├── logs/
+└── tmp/
+```
+
+- `raw/` stores exported `.eml` files.
+- `normalized/` stores JSON payloads built from the raw messages.
+- `events/` stores compact event manifests used for audit and replay.
+- `lobsterhook.db` stores mailbox state, ingested messages, queue jobs, and delivery attempts.
+
+## Testing
+
+Run the test suite:
+
+```bash
+uv run --with pytest pytest
+```
+
+Quick CLI smoke checks:
+
+```bash
+uv run python -m app --help
+uv run python -m app poller --help
+uv run python -m app dispatcher --help
+```
+
+## Documentation
+
+Start with [`DEV-DOCS/README.md`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/DEV-DOCS/README.md) and [`DEV-DOCS/00-START-HERE.md`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/DEV-DOCS/00-START-HERE.md). The `DEV-DOCS` folder is the active engineering source of truth for architecture, status, work tracking, and implementation patterns.
