@@ -8,9 +8,9 @@ Document the local-state rules that prevent duplicate processing and preserve de
 - Use this doc when adding replay, dead-letter, or operational inspection tooling.
 
 ## Key Files
-- [`app/db.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/db.py)
-- [`app/poller.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/poller.py)
-- [`app/dispatcher.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/dispatcher.py)
+- [`app/db.py`](../../app/db.py)
+- [`app/poller.py`](../../app/poller.py)
+- [`app/dispatcher.py`](../../app/dispatcher.py)
 
 ## Invariants
 - The primary dedupe key is `(account, folder, remote_id)` in the `messages` table.

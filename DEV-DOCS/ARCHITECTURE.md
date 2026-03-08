@@ -23,10 +23,10 @@ Lobsterhook is a local-first Python service that turns newly detected Himalaya m
 - Webhook secrets stay in config sources, not in queued job payloads.
 
 ## Data Flow
-1. [`app/himalaya_adapter.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/himalaya_adapter.py) lists envelopes and exports unseen raw mail.
-2. [`app/normalizer.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/normalizer.py) parses the `.eml` and produces the normalized JSON payload.
-3. [`app/db.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/db.py) persists mailbox state, events, queue jobs, and delivery attempts.
-4. [`app/dispatcher.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/dispatcher.py) loads the normalized JSON and performs outbound delivery.
+1. [`app/himalaya_adapter.py`](../app/himalaya_adapter.py) lists envelopes and exports unseen raw mail.
+2. [`app/normalizer.py`](../app/normalizer.py) parses the `.eml` and produces the normalized JSON payload.
+3. [`app/db.py`](../app/db.py) persists mailbox state, events, queue jobs, and delivery attempts.
+4. [`app/dispatcher.py`](../app/dispatcher.py) loads the normalized JSON and performs outbound delivery.
 
 ## External Integrations
 - Himalaya CLI 1.2.x for mailbox access

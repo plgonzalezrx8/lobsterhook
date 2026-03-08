@@ -14,9 +14,9 @@ Detect newly arrived email across configured Himalaya accounts and folders witho
 - The mailbox is marked successfully scanned only if the full scan completed without ingest errors.
 
 ## Key Files
-- [`app/poller.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/poller.py)
-- [`app/himalaya_adapter.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/himalaya_adapter.py)
-- [`app/db.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/db.py)
+- [`app/poller.py`](../../app/poller.py)
+- [`app/himalaya_adapter.py`](../../app/himalaya_adapter.py)
+- [`app/db.py`](../../app/db.py)
 
 ## Edge Cases
 - Himalaya envelope ids are opaque backend ids, so the poller dedupes on `(account, folder, remote_id)` instead of assuming IMAP UID semantics.

@@ -14,7 +14,7 @@ Document the repository-specific coding rules for Lobsterhook contributors.
 
 ## Typing and Validation
 - Keep type hints on public functions and dataclasses.
-- Validate config inputs eagerly in [`app/config.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/config.py) so runtime modes fail fast.
+- Validate config inputs eagerly in [`app/config.py`](../app/config.py) so runtime modes fail fast.
 
 ## Error Handling
 - Preserve durable state invariants before convenience. Do not mark mailbox scans successful or jobs done on partial failure.

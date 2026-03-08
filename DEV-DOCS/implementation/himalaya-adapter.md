@@ -4,12 +4,12 @@
 Capture the narrow Lobsterhook contract with Himalaya so mailbox-specific assumptions stay isolated in one module.
 
 ## When To Use
-- Use [`app/himalaya_adapter.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/himalaya_adapter.py) for any mailbox listing or raw message export logic.
+- Use [`app/himalaya_adapter.py`](../../app/himalaya_adapter.py) for any mailbox listing or raw message export logic.
 - Extend this module first if Lobsterhook later needs more Himalaya commands or better diagnostics.
 
 ## Key Files
-- [`app/himalaya_adapter.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/himalaya_adapter.py)
-- [`app/poller.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/poller.py)
+- [`app/himalaya_adapter.py`](../../app/himalaya_adapter.py)
+- [`app/poller.py`](../../app/poller.py)
 
 ## Invariants
 - Treat envelope `id` as an opaque backend identifier and expose it as `remote_id`.

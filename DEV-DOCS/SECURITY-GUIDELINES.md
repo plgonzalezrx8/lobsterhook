@@ -13,7 +13,7 @@ Capture the repository-specific security rules and operational boundaries for Lo
 
 ## Secrets and Environment Variables
 - Do not store bearer tokens in SQLite job payloads or event payload files.
-- Avoid committing `lobsterhook.toml` with real credentials. The repository only tracks [`lobsterhook.example.toml`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/lobsterhook.example.toml).
+- Avoid committing `lobsterhook.toml` with real credentials. The repository only tracks [`lobsterhook.example.toml`](../lobsterhook.example.toml).
 
 ## Data Protection
 - Raw `.eml` files may contain sensitive mail content and attachments. Keep `data/` out of git and treat it as private runtime state.

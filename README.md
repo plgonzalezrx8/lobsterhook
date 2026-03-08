@@ -58,7 +58,7 @@ Lobsterhook uses a TOML config file. The CLI searches for:
 1. `./lobsterhook.toml`
 2. `~/.config/lobsterhook/config.toml`
 
-An example file lives at [`lobsterhook.example.toml`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/lobsterhook.example.toml).
+An example file lives at [`lobsterhook.example.toml`](./lobsterhook.example.toml).
 
 Each `[[accounts]]` entry defines:
 
@@ -102,7 +102,7 @@ Run the long-lived dispatcher:
 uv run python -m app --config ./lobsterhook.toml dispatcher
 ```
 
-Shell wrappers are available in [`scripts/`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/scripts).
+Shell wrappers are available in [`scripts/`](./scripts/).
 
 ## Local Artifact Layout
 
@@ -141,4 +141,4 @@ uv run python -m app dispatcher --help
 
 ## Documentation
 
-Start with [`DEV-DOCS/README.md`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/DEV-DOCS/README.md) and [`DEV-DOCS/00-START-HERE.md`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/DEV-DOCS/00-START-HERE.md). The `DEV-DOCS` folder is the active engineering source of truth for architecture, status, work tracking, and implementation patterns.
+Start with [`DEV-DOCS/README.md`](./DEV-DOCS/README.md) and [`DEV-DOCS/00-START-HERE.md`](./DEV-DOCS/00-START-HERE.md). The `DEV-DOCS` folder is the active engineering source of truth for architecture, status, work tracking, and implementation patterns.

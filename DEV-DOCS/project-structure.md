@@ -28,7 +28,7 @@ lobsterhook/
 
 ## Implementation Rules
 - Keep mailbox, storage, and delivery responsibilities separated by module instead of collapsing them into a single service object.
-- Add new runtime commands through [`app/__main__.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/__main__.py) and cover them with tests or smoke checks.
+- Add new runtime commands through [`app/__main__.py`](../app/__main__.py) and cover them with tests or smoke checks.
 - Keep tracked configs credential-free. Real runtime secrets belong in env vars or local files outside git.
 
 ## Ownership / Boundaries

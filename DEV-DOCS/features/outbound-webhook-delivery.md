@@ -15,8 +15,8 @@ Deliver normalized email payloads to downstream systems without coupling Lobster
 - Other non-success responses move the job to `dead_letter`.
 
 ## Key Files
-- [`app/dispatcher.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/dispatcher.py)
-- [`app/db.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/db.py)
+- [`app/dispatcher.py`](../../app/dispatcher.py)
+- [`app/db.py`](../../app/db.py)
 
 ## Edge Cases
 - Dispatcher-internal failures such as missing normalized payload files are caught and converted into retry or dead-letter state instead of crashing the batch.

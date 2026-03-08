@@ -8,8 +8,8 @@ Describe how Lobsterhook turns raw `.eml` files into portable JSON payloads and 
 - Use this pattern when modifying data retention, directory layout, or MIME parsing behavior.
 
 ## Key Files
-- [`app/storage.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/storage.py)
-- [`app/normalizer.py`](/Users/pedrogonzalez/CascadeProjects/lobsterhook/app/normalizer.py)
+- [`app/storage.py`](../../app/storage.py)
+- [`app/normalizer.py`](../../app/normalizer.py)
 
 ## Invariants
 - Raw `.eml` exports are the canonical record of a message.
