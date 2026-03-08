@@ -143,6 +143,7 @@ def _parse_account(entry: object, base_dir: Path) -> AccountRoute:
         name=name,
         folders=folders,
         webhook_url=webhook_url,
+        payload_mode=_payload_mode(entry.get("payload_mode", "full"), name),
         bearer_token=entry.get("bearer_token"),
         bearer_token_env=entry.get("bearer_token_env"),
         bearer_token_file=_optional_path(entry.get("bearer_token_file"), base_dir),
@@ -172,3 +173,12 @@ def _positive_int(value: object, field_name: str) -> int:
     if number <= 0:
         raise ConfigError(f"{field_name} must be greater than zero.")
     return number
+
+
+def _payload_mode(value: object, account_name: str) -> str:
+    mode = str(value).strip().lower()
+    if mode not in {"full", "minimal"}:
+        raise ConfigError(
+            f"Account {account_name!r} must define payload_mode as either 'full' or 'minimal'."
+        )
+    return mode

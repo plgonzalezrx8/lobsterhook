@@ -18,9 +18,11 @@ name = "icloud"
 folders = ["INBOX"]
 webhook_url = "https://example.com/webhooks/icloud"
 bearer_token_env = "LOBSTERHOOK_ICLOUD_TOKEN"
+payload_mode = "minimal"
 
 [[accounts]]
 name = "gmail"
 folders = ["INBOX", "[Gmail]/Spam"]
 webhook_url = "https://example.com/webhooks/gmail"
 bearer_token_file = "~/.config/lobsterhook/gmail.token"
+payload_mode = "full"

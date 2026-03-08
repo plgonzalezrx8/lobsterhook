@@ -4,7 +4,10 @@ version = "0.1.0"
 description = "Local-first Himalaya poller that dispatches new email events to outbound webhooks."
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "beautifulsoup4>=4.14.3",
+    "markdownify>=1.2.2",
+]
 
 [project.optional-dependencies]
 dev = ["pytest>=8.4.1"]

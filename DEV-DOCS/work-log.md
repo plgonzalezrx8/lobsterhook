@@ -1,5 +1,22 @@
 # Work Log
 
+## 2026-03-08 - Session: Sanitized Payload Mode And HTML Cleanup
+
+### Session Goals
+- Reduce webhook payload noise for HTML-heavy email.
+- Keep rich local artifacts while allowing slim webhook consumers.
+- Add tests and docs for the new payload contract.
+
+### Work Completed
+- Added per-account `payload_mode` support with `full` and `minimal` webhook delivery modes.
+- Added HTML cleanup and Markdown fallback in the normalizer using Beautiful Soup and `markdownify`.
+- Added tests for payload shaping and noisy HTML normalization.
+- Updated README and DEV-DOCS to document the sanitized payload behavior.
+
+### Follow-Up
+- Validate minimal payload mode against real HTML-heavy mailbox traffic.
+- Tune HTML cleanup heuristics if live mailers still leak quoted content or irrelevant markup.
+
 ## 2026-03-08 - Session: Initial Runtime Scaffold And DEV-DOCS Bootstrap
 
 ### Session Goals

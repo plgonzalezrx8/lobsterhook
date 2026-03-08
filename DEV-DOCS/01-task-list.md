@@ -13,6 +13,7 @@ Track the active execution backlog for Lobsterhook.
 - [ ] Validate the current implementation against a real Himalaya account and a disposable webhook receiver.
 
 ## Up Next
+- [ ] Validate `payload_mode = "minimal"` on a real HTML-heavy email and confirm the webhook consumer gets the slim payload shape.
 - [ ] Add a small replay or inspect command for dead-letter jobs and delivery attempts.
 - [ ] Add more integration coverage around malformed Himalaya JSON and missing normalized payload files.
 - [ ] Add success-path dispatcher coverage with a stubbed receiver response.
@@ -25,6 +26,7 @@ Track the active execution backlog for Lobsterhook.
 - [x] Implemented the Lobsterhook v1 scaffold with poller, dispatcher, SQLite state, and local artifact storage.
 - [x] Bootstrapped `DEV-DOCS/` and expanded the root `README.md`.
 - [x] Added GitHub Actions CI for tests and CLI smoke checks on push and pull requests.
+- [x] Added HTML cleanup, Markdown fallback, and configurable minimal webhook payload mode.
 
 ## Notes
 - See [features/mailbox-polling.md](./features/mailbox-polling.md) for poller behavior details.

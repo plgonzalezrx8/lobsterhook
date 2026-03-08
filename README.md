@@ -66,10 +66,39 @@ Each `[[accounts]]` entry defines:
 - the Himalaya account name
 - the folders to monitor
 - the outbound webhook URL
+- the webhook `payload_mode`:
+  - `full` keeps the current rich normalized JSON payload
+  - `minimal` sends a slim sanitized body with only the key headers, debug metadata, and one chosen message field
 - exactly one bearer-token source:
   - inline `bearer_token`
   - `bearer_token_env`
   - `bearer_token_file`
+
+## Webhook Payload Modes
+
+Lobsterhook keeps raw `.eml` files and rich normalized JSON locally, but the webhook body can now be configured per account.
+
+- `payload_mode = "full"` sends the whole normalized JSON document.
+- `payload_mode = "minimal"` sends only:
+  - `account`
+  - `folder`
+  - `remote_id`
+  - `detected_at`
+  - `return_path`
+  - `date`
+  - `from`
+  - `to`
+  - `subject`
+  - `message`
+  - `message_format`
+  - `message_source`
+
+Message selection rule:
+
+- prefer cleaned `text/plain` when it exists
+- otherwise clean `text/html` and convert it to Markdown
+
+This keeps noisy HTML, local artifact paths, and large header blobs out of webhook consumers when you switch an account to minimal mode.
 
 ## Runtime Modes
 
@@ -121,6 +150,7 @@ data/
 
 - `raw/` stores exported `.eml` files.
 - `normalized/` stores JSON payloads built from the raw messages.
+- In minimal payload mode, the webhook body is smaller than the normalized artifact kept on disk.
 - `events/` stores compact event manifests used for audit and replay.
 - `lobsterhook.db` stores mailbox state, ingested messages, queue jobs, and delivery attempts.
 

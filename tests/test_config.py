@@ -29,6 +29,7 @@ def test_load_config_resolves_relative_paths_and_env_tokens(tmp_path: Path, monk
 
     assert config.app.data_dir == (tmp_path / "runtime-data").resolve()
     assert config.accounts["support"].folders == ("INBOX", "Escalations")
+    assert config.accounts["support"].payload_mode == "full"
     assert resolve_bearer_token(config.accounts["support"]) == "secret-token"
 
 
@@ -46,3 +47,22 @@ def test_load_config_requires_one_token_source(tmp_path: Path) -> None:
 
     with pytest.raises(ConfigError):
         load_config(config_path)
+
+
+def test_load_config_accepts_minimal_payload_mode(tmp_path: Path) -> None:
+    config_path = tmp_path / "lobsterhook.toml"
+    config_path.write_text(
+        """
+        [[accounts]]
+        name = "support"
+        folders = ["INBOX"]
+        webhook_url = "https://example.com/webhook"
+        payload_mode = "minimal"
+        bearer_token = "secret-token"
+        """,
+        encoding="utf-8",
+    )
+
+    config = load_config(config_path)
+
+    assert config.accounts["support"].payload_mode == "minimal"
