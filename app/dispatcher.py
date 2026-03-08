@@ -161,6 +161,8 @@ class WebhookDispatcher:
         if payload_mode == "full":
             return normalized_payload
 
+        # Minimal mode keeps the downstream contract stable and small while the
+        # richer normalized artifact remains available on disk for replay/debug.
         sender = normalized_payload.get("sender") or {"name": None, "address": None}
         return {
             "account": normalized_payload.get("account"),
