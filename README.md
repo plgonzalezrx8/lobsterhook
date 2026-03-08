@@ -31,6 +31,7 @@ Out of scope in the current implementation:
 
 ```text
 .
+├── .github/workflows/        # GitHub Actions CI workflows
 ├── app/                     # Python package for config, polling, normalization, and dispatch
 ├── launchd/                 # macOS launchd plist templates
 ├── scripts/                 # Thin uv-backed runner scripts
@@ -130,6 +131,8 @@ Run the test suite:
 ```bash
 uv run --with pytest pytest
 ```
+
+GitHub Actions runs the same test suite and CLI smoke checks on every push, pull request, and manual dispatch through [`.github/workflows/ci.yml`](./.github/workflows/ci.yml).
 
 Quick CLI smoke checks:
 

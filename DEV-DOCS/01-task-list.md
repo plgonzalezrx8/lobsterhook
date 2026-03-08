@@ -13,9 +13,9 @@ Track the active execution backlog for Lobsterhook.
 - [ ] Validate the current implementation against a real Himalaya account and a disposable webhook receiver.
 
 ## Up Next
-- [ ] Add GitHub Actions for the existing test suite and a basic CLI smoke check.
 - [ ] Add a small replay or inspect command for dead-letter jobs and delivery attempts.
 - [ ] Add more integration coverage around malformed Himalaya JSON and missing normalized payload files.
+- [ ] Add success-path dispatcher coverage with a stubbed receiver response.
 
 ## Backlog
 - [ ] Add Linux `systemd` unit templates after the macOS `launchd` flow is validated.
@@ -24,6 +24,7 @@ Track the active execution backlog for Lobsterhook.
 ## Completed Recently
 - [x] Implemented the Lobsterhook v1 scaffold with poller, dispatcher, SQLite state, and local artifact storage.
 - [x] Bootstrapped `DEV-DOCS/` and expanded the root `README.md`.
+- [x] Added GitHub Actions CI for tests and CLI smoke checks on push and pull requests.
 
 ## Notes
 - See [features/mailbox-polling.md](./features/mailbox-polling.md) for poller behavior details.

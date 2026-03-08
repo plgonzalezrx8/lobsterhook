@@ -12,6 +12,7 @@
 - Added tests covering config parsing, normalization, queue persistence, polling idempotency, and dispatcher dead-letter behavior.
 - Added shell wrappers, `launchd` plist templates, an example config, and a fully populated `DEV-DOCS/` folder.
 - Expanded the root `README.md` to describe current runtime behavior and repository usage.
+- Added GitHub Actions CI to run the test suite and CLI smoke checks on pushes and pull requests.
 
 ### Follow-Up
 - Validate the implementation end-to-end against a real mailbox and a disposable webhook receiver.

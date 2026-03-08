@@ -10,13 +10,12 @@ Provide the minimum context needed to continue Lobsterhook without rediscovering
 Initial v1 scaffold is implemented and documented. The codebase has a working poller, dispatcher, SQLite state model, tests, and repo operating docs, but it has not yet been validated against a full live mailbox-to-webhook run.
 
 ## Current Blockers
-- No GitHub Actions or automated CI exists yet.
 - No committed production `lobsterhook.toml` exists by design, so local runtime validation depends on machine-specific setup.
 
 ## Immediate Priorities
 1. Run a real mailbox smoke test with a non-production webhook receiver and confirm end-to-end delivery.
-2. Add CI for `uv run --with pytest pytest` and a small CLI smoke check.
-3. Harden delivery observability with more explicit response logging and replay tooling if live testing exposes gaps.
+2. Harden delivery observability with more explicit response logging and replay tooling if live testing exposes gaps.
+3. Add broader integration coverage for malformed Himalaya JSON and filesystem failure paths.
 
 ## Read Next
 1. [01-task-list.md](./01-task-list.md)

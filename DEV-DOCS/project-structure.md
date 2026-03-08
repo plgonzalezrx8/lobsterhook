@@ -6,6 +6,7 @@ Explain the Lobsterhook repository layout and the role of each major directory.
 ## Root Layout
 ```text
 lobsterhook/
+├── .github/
 ├── app/
 ├── DEV-DOCS/
 ├── launchd/
@@ -20,6 +21,7 @@ lobsterhook/
 ```
 
 ## Important Paths
+- `.github/workflows/` — GitHub Actions CI workflow definitions.
 - `app/` — Runtime code for config loading, Himalaya integration, message normalization, local storage, polling, and dispatch.
 - `tests/` — Pytest coverage for the current runtime contract.
 - `scripts/` — Thin wrappers around `uv run python -m app ...` for local operations and service managers.
