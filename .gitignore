@@ -6,5 +6,6 @@ __pycache__/
 build/
 dist/
 data/
+lobsterhook.toml
 *.db
 *.pyc
